@@ -5,11 +5,11 @@ TẠO SOLUTION GỒM CÁC PROJECT SAU:
 2. Console app, bắt buộc sử dụng .NET Framework 2.0, sử dụng được DLL trên: nhập được input, gọi DLL, hiển thị kết quả, phải có dấu án cá nhân. keyword: c# window Console => Console App (.NET Framework), biên dịch ra EXE  
 3. Windows Form Application, bắt buộc sử dụng .NET Framework 2.0**, sử dụng được DLL đa năng trên, kéo các control vào để có thể lấy đc input, gọi DLL truyền input để lấy đc kq, hiển thị kq ra window form, phải có dấu án cá nhân; keyword: c# window Desktop => Windows Form Application (.NET Framework), biên dịch ra EXE  
 4. Web đơn giản, bắt buộc sử dụng .NET Framework 2.0, sử dụng web server là IIS, dùng file hosts để tự tạo domain, gắn domain này vào iis, file index.html có sử dụng html css js để xây dựng giao diện nhập được các input cho bài toán, dùng mã js để tiền xử lý dữ liệu, js để gửi lên backend. backend là api.aspx, trong code của api.aspx.cs thì lấy được các input mà js gửi lên, rồi sử dụng được DLL đa năng trên. kết quả gửi lại json cho client, js phía client sẽ nhận được json này hậu xử lý để thay đổi giao diện theo dữ liệu nhận dược, phải có dấu án cá nhân. keyword: c# window web => ASP.NET Web Application (.NET Framework) + tham khảo link chatgpt thầy gửi. project web này biên dịch ra DLL, phải kết hợp với IIS mới chạy được.  
-=========== BÀI LÀM ==============
-1. Ứng dụng tính chỉ số BMI (Body Mass Index) và tư vấn nhanh sức khỏe, giúp người dùng nhập chiều cao (cm) và cân nặng (kg) để nhận kết quả BMI, phân loại thể trạng theo chuẩn WHO và khuyến nghị cơ bản.
-2. Hệ thống được triển khai theo mô hình 4 project trên .NET Framework 2.0: MyHealthLib (DLL lõi tính toán), HealthConsoleApp (Console dùng thử), HealthWinFormApp (giao diện desktop), HealthWebApp (ASP.NET WebForms + API trả JSON).
-3. Tính năng chính: kiểm tra dữ liệu đầu vào, tính BMI, phân loại (Thiếu cân/Bình thường/Thừa cân/Béo phì), sinh báo cáo tiếng Việt; bản Web cho phép gọi API từ trang index để hiển thị tức thì.
-4. Mục tiêu: cung cấp một giải pháp nhỏ gọn, dễ triển khai trong môi trường cũ (CLR 2.0), có cấu trúc tách lớp rõ ràng để tái sử dụng và mở rộng sau này.
+#    =========== BÀI LÀM ==============
+    1. Ứng dụng tính chỉ số BMI (Body Mass Index) và tư vấn nhanh sức khỏe, giúp người dùng nhập chiều cao (cm) và cân nặng (kg) để nhận kết quả BMI, phân loại thể trạng theo chuẩn WHO và khuyến nghị cơ bản.
+    2. Hệ thống được triển khai theo mô hình 4 project trên .NET Framework 2.0: MyHealthLib (DLL lõi tính toán), HealthConsoleApp (Console dùng thử), HealthWinFormApp (giao diện desktop), HealthWebApp (ASP.NET WebForms + API trả JSON).
+    3. Tính năng chính: kiểm tra dữ liệu đầu vào, tính BMI, phân loại (Thiếu cân/Bình thường/Thừa cân/Béo phì), sinh báo cáo tiếng Việt; bản Web cho phép gọi API từ trang index để hiển thị tức thì.
+    4. Mục tiêu: cung cấp một giải pháp nhỏ gọn, dễ triển khai trong môi trường cũ (CLR 2.0), có cấu trúc tách lớp rõ ràng để tái sử dụng và mở rộng sau này.
 # Tạo Solution và 4 Project  
     1. MyHealthLib (Class Library)  
     2. HealthConsoleApp (Console App)  

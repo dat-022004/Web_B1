@@ -1,0 +1,566 @@
+﻿<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HealthCheck Web - Dinhdat2k4</title>
+
+    <!-- Google Font (có Internet thì sẽ đẹp hơn, không có vẫn hiển thị font fallback) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg-card: #0f172a;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --primary: #4f46e5;
+            --primary-2: #06b6d4;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --surface: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.1);
+            --shadow: 0 10px 30px rgba(0,0,0,.35);
+            --chip-bg: rgba(255,255,255,.08);
+        }
+
+        [data-theme="light"] {
+            --bg: #f6f8fc;
+            --bg-card: #ffffff;
+            --text: #0f172a;
+            --muted: #475569;
+            --surface: #f1f5f9;
+            --border: #e2e8f0;
+            --chip-bg: #eef2ff;
+            --shadow: 0 10px 30px rgba(15,23,42,.08);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: radial-gradient(1200px 600px at -10% -10%, rgba(99,102,241,.25), transparent 40%), radial-gradient(1000px 500px at 110% 0%, rgba(34,211,238,.18), transparent 40%), linear-gradient(180deg, var(--bg), var(--bg));
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 32px auto;
+            padding: 0 16px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: .2px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 5px 15px rgba(79,70,229,.35);
+        }
+
+        .mode {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .toggle {
+            cursor: pointer;
+            user-select: none;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero {
+            padding: 22px 22px;
+            background: linear-gradient(135deg, rgba(79,70,229,.18), rgba(6,182,212,.12)), linear-gradient(0deg, var(--bg-card), var(--bg-card));
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+            .hero h1 {
+                margin: 0;
+                font-size: 22px;
+            }
+
+        .sig {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 24px;
+            padding: 22px;
+        }
+
+        @media (max-width: 860px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pane {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+            .pane h3 {
+                margin: 4px 0 14px;
+                font-size: 16px;
+                color: var(--muted)
+            }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .field {
+            position: relative;
+        }
+
+        .label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px 14px 12px 44px;
+            background: #0000;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            transition: border .15s ease, box-shadow .15s ease, background .15s ease;
+        }
+
+            .input:hover {
+                border-color: #a5b4fc;
+            }
+
+            .input:focus {
+                border-color: #6366f1;
+                box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+                background: rgba(99,102,241,.04);
+            }
+
+        .unit {
+            position: absolute;
+            left: 12px;
+            top: 34px;
+            width: 22px;
+            height: 22px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 16px;
+            border: 0;
+            border-radius: 12px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: .2px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 8px 18px rgba(79,70,229,.35);
+            transition: transform .08s ease, filter .15s ease, box-shadow .2s ease;
+        }
+
+            .btn:hover {
+                filter: brightness(1.05);
+                box-shadow: 0 10px 22px rgba(79,70,229,.42);
+            }
+
+            .btn:active {
+                transform: translateY(1px);
+            }
+
+            .btn.secondary {
+                background: #0ea5e9;
+                box-shadow: 0 8px 18px rgba(14,165,233,.35);
+            }
+
+            .btn[disabled] {
+                opacity: .7;
+                cursor: not-allowed;
+            }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,.45);
+            border-top-color: #fff;
+            border-radius: 50%;
+            display: none;
+            margin-right: 8px;
+            animation: spin .8s linear infinite;
+        }
+
+        .btn.loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .result {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 10px;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .bmi-value {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
+
+        .chip {
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: .3px;
+            background: var(--chip-bg);
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+            .chip.success {
+                background: rgba(34,197,94,.15);
+                color: #16a34a;
+                border-color: rgba(34,197,94,.35);
+            }
+
+            .chip.warn {
+                background: rgba(245,158,11,.15);
+                color: #b45309;
+                border-color: rgba(245,158,11,.35);
+            }
+
+            .chip.danger {
+                background: rgba(239,68,68,.15);
+                color: #b91c1c;
+                border-color: rgba(239,68,68,.35);
+            }
+
+        .report {
+            white-space: pre-line;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            color: var(--text);
+            min-height: 112px;
+        }
+
+        .err {
+            display: none;
+            margin-top: 8px;
+            color: #b91c1c;
+            background: rgba(239,68,68,.12);
+            border: 1px solid rgba(239,68,68,.35);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            padding: 14px 0 18px;
+            font-size: 13px;
+        }
+
+            .footer strong {
+                color: #4f46e5
+            }
+
+        /* Small nice helper */
+        .kbd {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div class="brand">
+                <div class="logo" aria-hidden="true"></div>
+                <div>
+                    <div>HealthCheck</div>
+                    <div class="sig">By Dinhdat2k4</div>
+                </div>
+            </div>
+            <div class="mode">
+                <span>Chế độ</span>
+                <button id="toggleTheme" class="toggle" type="button">Light/Dark</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="hero">
+                <h1>Đo chỉ số BMI và tư vấn nhanh</h1>
+                <div class="sig">Dùng thư viện MyHealthLib (DLL)</div>
+            </div>
+
+            <div class="grid">
+                <!-- Nhập liệu -->
+                <div class="pane">
+                    <h3>Nhập thông tin</h3>
+                    <div class="row">
+                        <div class="field">
+                            <label class="label" for="h">Chiều cao</label>
+                            <div class="unit">cm</div>
+                            <input id="h" class="input" inputmode="decimal" placeholder="Ví dụ: 170" />
+                        </div>
+                        <div class="field">
+                            <label class="label" for="w">Cân nặng</label>
+                            <div class="unit">kg</div>
+                            <input id="w" class="input" inputmode="decimal" placeholder="Ví dụ: 65" />
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button id="go" class="btn" type="button">
+                            <span class="spinner" aria-hidden="true"></span>
+                            Tính BMI
+                        </button>
+                        <button id="reset" class="btn secondary" type="button">Làm mới</button>
+                        <div style="color:var(--muted); font-size:13px; align-self:center;">
+                            Mẹo: nhấn <span class="kbd">Enter</span> để tính nhanh
+                        </div>
+                    </div>
+
+                    <div id="err" class="err" role="alert"></div>
+                </div>
+
+                <!-- Kết quả -->
+                <div class="pane">
+                    <h3>Kết quả</h3>
+
+                    <div class="result">
+                        <div class="stat">
+                            <div class="bmi-value" id="bmiValue">—</div>
+                            <div id="category" class="chip">Chưa có dữ liệu</div>
+                        </div>
+
+                        <div id="report" class="report">Nhập số liệu và bấm “Tính BMI”.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Web UI thiết kế bởi <strong>Dinhdat2k4</strong> • Hỗ trợ cả chế độ sáng / tối
+        </div>
+    </div>
+
+    <script>
+        // Toggle light/dark
+        (function () {
+            const root = document.documentElement;
+            const btn = document.getElementById('toggleTheme');
+            btn.addEventListener('click', () => {
+                const cur = root.getAttribute('data-theme') || 'light';
+                root.setAttribute('data-theme', cur === 'light' ? 'dark' : 'light');
+            });
+        })();
+
+        function $(id) { return document.getElementById(id); }
+
+        function showErr(msg) {
+            const el = $('err');
+            el.textContent = msg || 'Lỗi không xác định';
+            el.style.display = 'block';
+        }
+        function clearErr() { $('err').style.display = 'none'; }
+
+        function classifyBMI(bmi) {
+            if (!isFinite(bmi)) return { text: 'N/A', cls: 'chip' };
+            if (bmi < 18.5) return { text: 'Thiếu cân', cls: 'chip warn' };
+            if (bmi < 25) return { text: 'Bình thường', cls: 'chip success' };
+            if (bmi < 30) return { text: 'Thừa cân', cls: 'chip warn' };
+            return { text: 'Béo phì', cls: 'chip danger' };
+        }
+
+        function calcLocalBMI(h, w) {
+            const m = h / 100.0;
+            return +(w / (m * m)).toFixed(1);
+        }
+
+        function setLoading(on) {
+            const btn = $('go');
+            if (on) { btn.classList.add('loading'); btn.setAttribute('disabled', 'true'); }
+            else { btn.classList.remove('loading'); btn.removeAttribute('disabled'); }
+        }
+
+        async function postApi(h, w) {
+            // Gọi API cũ (form-urlencoded)
+            const body = new URLSearchParams({ h: String(h), w: String(w) });
+            const res = await fetch('api.ashx', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            });
+            // API trả {"ok":true,"report":"..."}
+            return res.ok ? res.json() : { ok: false, msg: 'HTTP ' + res.status };
+        }
+
+        async function handleCalc() {
+            clearErr();
+            const h = parseFloat(($('h').value || '').replace(',', '.'));
+            const w = parseFloat(($('w').value || '').replace(',', '.'));
+
+            if (!isFinite(h) || !isFinite(w) || h <= 0 || w <= 0) {
+                showErr('Nhập số hợp lệ (> 0) cho chiều cao và cân nặng.');
+                return;
+            }
+
+            setLoading(true);
+            try {
+                // Tính BMI cục bộ để hiển thị đẹp ngay
+                const bmi = calcLocalBMI(h, w);
+                const cls = classifyBMI(bmi);
+                $('bmiValue').textContent = isFinite(bmi) ? bmi : '—';
+                $('category').textContent = cls.text;
+                $('category').className = cls.cls;
+
+                // Gọi API để lấy báo cáo chi tiết từ DLL
+                const data = await postApi(h, w);
+                if (data && data.ok) {
+                    $('report').textContent = data.report || 'Không có nội dung.';
+                } else {
+                    showErr(data && data.msg ? data.msg : 'Lỗi xử lý từ máy chủ.');
+                }
+            } catch (err) {
+                showErr('Không thể kết nối máy chủ. ' + (err && err.message ? err.message : ''));
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        function handleReset() {
+            $('h').value = '';
+            $('w').value = '';
+            $('bmiValue').textContent = '—';
+            $('category').textContent = 'Chưa có dữ liệu';
+            $('category').className = 'chip';
+            $('report').textContent = 'Nhập số liệu và bấm “Tính BMI”.';
+            clearErr();
+            $('h').focus();
+        }
+
+        // Wire up events
+        (function () {
+            $('go').addEventListener('click', handleCalc);
+            $('reset').addEventListener('click', handleReset);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') handleCalc();
+            });
+
+            // Demo: tự điền ví dụ khi lần đầu vào
+            if (!$('h').value && !$('w').value) {
+                $('h').value = '170';
+                $('w').value = '65';
+            }
+        })();
+            async function postApi(h, w){
+        const body = new URLSearchParams({h: String(h), w: String(w) });
+            const res = await fetch('api.ashx', {
+                method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' },
+            body
+        });
+            const text = await res.text();
+            try {
+          return JSON.parse(text); // kỳ vọng {ok, report | msg}
+        } catch {
+          return {ok:false, msg: (res.ok ? 'Không phải JSON' : `HTTP ${res.status}`) + (text ? ` - ${text}` : '') };
+        }
+      }
+    </script>
+</body>
+</html>
